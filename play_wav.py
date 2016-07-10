@@ -1,3 +1,4 @@
+from __future__ import print_function
 #!/usr/bin/env python
 
 """
@@ -26,8 +27,7 @@ except ImportError:
 			import pyglet
 			pygletFound = True
 		except ImportError:
-			print "Audio playback frameworks not found. Install one of pyaudio, tkSnack or pyglet."
-
+			print("Audio playback frameworks not found. Install one of pyaudio, tkSnack or pyglet.")
 class Sound:
 	def __init__(self, fn = None):
 		pass

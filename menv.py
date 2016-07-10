@@ -1,3 +1,4 @@
+from __future__ import print_function
 #!/usr/bin/env python
 
 """
@@ -48,8 +49,7 @@ class mEnv:
 		elif self.instrument == 's':
 			self.synthSounds(pysynth_s, self.outFile)
 		else:
-			print invalidOption
-			mEnv()
+			print(invalidOption)			mEnv()
 
 	def parse(self, cliInput):
 		''' Parse command line input.'''
@@ -59,8 +59,7 @@ class mEnv:
 			sys.exit()
 		# 'help' command.
 		if cliInput == 'help':
-			print '\n' + helpContent + '\n' + usageHelp + '\n'
-			mEnv()
+			print('\n' + helpContent + '\n' + usageHelp + '\n')			mEnv()
 
 		# List with whitespace as delimiter.
 		cliInput = cliInput.split()
@@ -75,27 +74,23 @@ class mEnv:
 					try:
 						self.bpmVal = int(comp[1])
 					except IndexError:
-						print warningStr
-						mEnv()
+						print(warningStr)						mEnv()
 				elif comp[0] == 'repeat':
 					try:
 						self.repeatVal = int(comp[1])
 					except IndexError:
-						print warningStr
-						mEnv()
+						print(warningStr)						mEnv()
 				elif comp[0] == 'sound':
 					try:
 						self.instrument = str(comp[1])
 					except IndexError:
-						print warningStr
-						mEnv()
+						print(warningStr)						mEnv()
 				elif comp[0] == 'save':
 					try:
 						self.outFile = str(comp[1]) + '.wav'
 						self.trashFile = False
 					except IndexError:
-						print warningStr
-						mEnv()
+						print(warningStr)						mEnv()
 
 				continue
 
@@ -106,8 +101,7 @@ class mEnv:
 					try:
 						self.synthParam.append((comp[i:], int(comp[:i])))
 					except ValueError:
-						print invalidCmd
-						mEnv()
+						print(invalidCmd)						mEnv()
 
 					break
 				i += 1
@@ -147,15 +141,13 @@ class mEnv:
 			else:
 				renderSound.make_wav(self.synthParam, fn = outFile, silent = True)
 		except KeyError:
-			print warningStr
-			mEnv()
+			print(warningStr)			mEnv()
 
 
 
 if __name__ == "__main__":
 	# Print introductory help content.
-	print helpContent
-
+	print(helpContent)
 	# Interpreter loop.
 	while True:
 		a = mEnv()
@@ -165,5 +157,4 @@ if __name__ == "__main__":
 			a.trashFile = False
 			if a.outFile == '':
 				a.outFile = 'temp.wav'
-			print 'Could not play file. Saved to ' + a.outFile
-		a.removeFile(a.outFile)
+			print('Could not play file. Saved to ' + a.outFile)		a.removeFile(a.outFile)

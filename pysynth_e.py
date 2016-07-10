@@ -1,8 +1,8 @@
+from __future__ import print_function
 #!/usr/bin/env python
 # -*- coding: latin-1 -*-
 
-#print "*** FM PIANO VERSION WITH NOTE CACHING ***"
-
+#print("*** FM PIANO VERSION WITH NOTE CACHING ***")
 """
 ##########################################################################
 #                       * * *  PySynth  * * *
@@ -64,7 +64,7 @@ song3 = (
   ('bb*', 8), ('d6', 8), ('c6', 8), ('bb5', 16), ('ab5', 16), ('g5', 16), ('ab5', 16), ('c5', 16), ('d5', 16), ('eb5', -4),
 )
 
-# Example 4: J.S. Bach: Bourrée (from BWV 996)
+# Example 4: J.S. Bach: BourrÃ©e (from BWV 996)
 song4_rh = (
   ('e', 8), ('f#', 8),
   ('g*', 4), ('f#', 8), ('e', 8), ('d#*', 4), ('e', 8), ('f#', 8),
@@ -91,8 +91,7 @@ song4_lh = (
 )
 
 ##########################################################################
-# Compute and print piano key frequency table
-##########################################################################
+ print(piano key frequency table)##########################################################################
 pitchhz, keynum = {}, {}
 keys_s = ('a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#')
 keys_f = ('a', 'bb', 'b', 'c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab')
@@ -119,8 +118,7 @@ def linint(arr, x):
 	lx = min(xvals)
 	try: assert lx <= x <= ux
 	except:
-		#print lx, x, ux
-		raise
+		#print(lx, x, ux)		raise
 	for v in arr:
 		if v[0] > x and v[0] - x <= ux - x:
 			ux = v[0]
@@ -128,20 +126,16 @@ def linint(arr, x):
 		if v[0] < x and x - v[0] >= lx - x:
 			lx = v[0]
 			ly = v[1]		
-	#print lx, ly, ux, uy
-	return (float(x) - lx) / (ux - lx) * (uy - ly) + ly
+	#print(lx, ly, ux, uy)	return (float(x) - lx) / (ux - lx) * (uy - ly) + ly
 
 
 #if __name__ == '__main__':
-    #print "Piano key frequencies (for equal temperament):"
-    #print "Key number\tScientific name\tFrequency (Hz)"
-for k in range(88):
+    #print("Piano key frequencies (for equal temperament):")    #print("Key number\tScientific name\tFrequency (Hz)")for k in range(88):
     freq = 27.5 * 2.**(k/12.)
     oct = (k+9) // 12
     note = '%s%u' % (keys_s[k%12], oct)
     #if __name__ == '__main__':
-    #    print "%10u\t%15s\t%14.2f" % (k+1, note.upper(), freq)
-    pitchhz[note] = freq
+    #    print("%10u\t%15s\t%14.2f" % (k+1, note.upper(), freq))    pitchhz[note] = freq
     keynum[note] = k
     note = '%s%u' % (keys_f[k%12], oct)
     pitchhz[note] = freq
@@ -156,13 +150,11 @@ for h in range(1, len(harmo[0])):
 	for h2 in range(88):
 		harmtab[h2,h] = linint(dat, h2+1)
 
-#print harmtab[keynum['c4'],:]
-for h2 in range(88):
+#print(harmtab[keynum['c4'],:])for h2 in range(88):
 	for n in range(20):
 		ref = harmtab[h2,1]
 		harmtab[h2,n] = 10.**((harmtab[h2,n] - ref)/20.)
-#print harmtab[keynum['c4'],:]
-
+#print(harmtab[keynum['c4'],:])
 ##########################################################################
 #### Main program starts below
 ##########################################################################
@@ -257,8 +249,7 @@ def make_wav(song,bpm=120,transpose=0,leg_stac=.9,boost=1.1,repeat=0,fn="out.wav
 		new = note_cache[note].copy()
 	    dec_ind = int(leg_stac*q)
 	    new[dec_ind:] *= np.exp(-np.arange(raw_note-dec_ind)/3000.)
-	    #print snd_len, raw_note
-	    data[pos:pos+snd_len] += ( new[:snd_len] * vol  )
+	    #print(snd_len, raw_note)	    data[pos:pos+snd_len] += ( new[:snd_len] * vol  )
 
 	ex_pos = 0.
 	t_len = 0
@@ -272,15 +263,12 @@ def make_wav(song,bpm=120,transpose=0,leg_stac=.9,boost=1.1,repeat=0,fn="out.wav
 		if not y[-1].isdigit():
 			y += '4'
 		cache_this[y] = cache_this.get(y, 0) + 1
-	#print "Note frequencies in song:", cache_this
-	data = np.zeros((repeat+1)*t_len + 441000.)
-	#print len(data)/44100., "s allocated"
-
+	#print("Note frequencies in song:", cache_this)	data = np.zeros((repeat+1)*t_len + 441000.)
+	#print(len(data)/44100., "s allocated")
 	for rp in range(repeat+1):
 		for nn, x in enumerate(song):
 		    if not nn % 4 and silent == False:
-		        print "[%u/%u]\t" % (nn+1,len(song))
-		    if x[0]!='r':
+		        print("[%u/%u]\t" % (nn+1,len(song)))		    if x[0]!='r':
 		        if x[0][-1] == '*':
 		            vol = boost
 		            note = x[0][:-1]
@@ -308,8 +296,7 @@ def make_wav(song,bpm=120,transpose=0,leg_stac=.9,boost=1.1,repeat=0,fn="out.wav
 	# Write to output file (in WAV format)
 	##########################################################################
 	if silent == False:
-		print "Writing to file", fn
-
+		print("Writing to file", fn)
 	data = data / (data.max() * 2.)
 	out_len = int(2. * 44100. + ex_pos+.5)
 	data2 = np.zeros(out_len, np.short)
@@ -328,12 +315,10 @@ def mix_files(a, b, c, chann = 2, phase = -1.):
 	f3.setcomptype('NONE','Not Compressed')
 	frames = min(f1.getnframes(), f2.getnframes())
 
-	print "Mixing files, total length %.2f s..." % (frames / 44100.)
-	d1 = f1.readframes(frames)
+	print("Mixing files, total length %.2f s..." % (frames / 44100.))	d1 = f1.readframes(frames)
 	d2 = f2.readframes(frames)
 	for n in range(frames):
-		if not n%(5*44100): print n // 44100, 's'
-		if chann < 2:
+ print(n // 44100, 's')		if chann < 2:
 			d3 = struct.pack('h',
 				.5 * (struct.unpack('h', d1[2*n:2*n+2])[0] +
 				struct.unpack('h', d2[2*n:2*n+2])[0]))
@@ -352,10 +337,8 @@ def mix_files(a, b, c, chann = 2, phase = -1.):
 ##########################################################################
 
 if __name__ == '__main__':
-	print "*** FM PIANO VERSION WITH NOTE CACHING ***"
-	print
-	print "Creating Demo Songs... (this might take about a minute)"
-	print
+	print("*** FM PIANO VERSION WITH NOTE CACHING ***")	print
+	print("Creating Demo Songs... (this might take about a minute)")	print
 
 	#make_wav((('c', 4), ('e', 4), ('g', 4), ('c5', 1)))
 	#make_wav(song1, fn = "pysynth_scale.wav")

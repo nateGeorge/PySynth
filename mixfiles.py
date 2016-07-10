@@ -1,3 +1,4 @@
+from __future__ import print_function
 #!/usr/bin/env python
 # -*- coding: latin-1 -*-
 
@@ -15,12 +16,10 @@ def mix_files(a, b, c, chann = 2, phase = -1.):
 	f3.setcomptype('NONE','Not Compressed')
 	frames = min(f1.getnframes(), f2.getnframes())
 
-	print "Mixing files, total length %.2f s..." % (frames / 44100.)
-	d1 = f1.readframes(frames)
+	print("Mixing files, total length %.2f s..." % (frames / 44100.))	d1 = f1.readframes(frames)
 	d2 = f2.readframes(frames)
 	for n in range(frames):
-		if not n%(5*44100): print n // 44100, 's'
-		if chann < 2:
+ print(n // 44100, 's')		if chann < 2:
 			d3 = struct.pack('h',
 				.5 * (struct.unpack('h', d1[2*n:2*n+2])[0] +
 				struct.unpack('h', d2[2*n:2*n+2])[0]))
@@ -37,6 +36,5 @@ def mix_files(a, b, c, chann = 2, phase = -1.):
 if __name__ == '__main__':
 	if len(sys.argv) == 4:
 		a, b, c = sys.argv[1:]
-		print "Mixing %s and %s, output will be %s" % (a, b, c)
-		mix_files(a, b, c)
+		print("Mixing %s and %s, output will be %s" % (a, b, c))		mix_files(a, b, c)
 

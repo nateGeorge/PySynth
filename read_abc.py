@@ -1,3 +1,4 @@
+from __future__ import print_function
 #!/usr/bin/env python
 
 """
@@ -300,8 +301,7 @@ for l in f:
 		for fs in fsrange:
 			for oct in range(9):
 				global_sharps_flats['%s%u' % (flats_and_sharps[fs], oct)] = sign
-		#print global_sharps_flats
-		measure_sharps_flats = global_sharps_flats.copy()
+		#print(global_sharps_flats)		measure_sharps_flats = global_sharps_flats.copy()
 	if l.strip() == '' and sel:
 		break
 	if sel and not (l[0].isalpha() and l[1] == ':'):
@@ -315,13 +315,9 @@ f.close()
 
 if not sel:
 	print
-	print "*** Song %u not found in file %s!" % (num, fn)
-	print
+	print("*** Song %u not found in file %s!" % (num, fn))	print
 else:
-	print key, unit
-	print song
-	print
-	print len(song)
-
+	print(key, unit)	print(song)	print
+	print(len(song))
 	pysynth.make_wav(song, bpm = bpm)
 
